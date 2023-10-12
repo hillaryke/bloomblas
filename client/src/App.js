@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
-import Topheader from'./Components/Topheader'
+import Topheader from './Components/Topheader'
 import Navigation from './Components/Navigation';
 import Footer from './Components/Footer';
 import HomePage from './Components/HomePage';
@@ -13,23 +13,25 @@ import Fashion from './Components/Fashion';
 import Register from './Components/Register';
 
 function App() {
-  return (
-    <Router>
-      <Topheader/>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/user/:username" element={<UserProfile />} />
-        <Route path="/post/:postId" element={<BlogPost />} />
-        <Route path="/create" element={<CreateEditPost />} />
-        <Route path="/edit/:postId" element={<CreateEditPost />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/fashion" element={<Fashion />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      <Footer />
-    </Router>
-  );
+
+
+    return (
+        <Router>
+            <Topheader/>
+            <Navigation/>
+            <Routes>
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/user/:username" element={<UserProfile/>}/>
+                <Route path="/post/:postId" element={<BlogPost/>}/>
+                <Route path="/create" element={<CreateEditPost/>}/>
+                <Route path="/edit/:postId" element={<CreateEditPost/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/fashion" element={<Fashion/>}/>
+                <Route path="/register" element={<Register/>}/>
+            </Routes>
+            <Footer/>
+        </Router>
+    );
 }
 
 export default App;
