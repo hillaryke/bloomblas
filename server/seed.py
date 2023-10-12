@@ -94,12 +94,13 @@ with app.app_context():
         }
     ]
 
-    for data in blogposts_data:
+    for data in new_blogposts:
         # Provide valid values for 'ratings' and 'updated_at' when inserting a blog post
         blogpost_data = {
-            "name": data["name"],
-            "description": data["description"],
-            # "image": data["image"],
+            "title": data["title"],
+            "description": data["content_description"],
+            "author": data["author"],
+            "image_link": data["image_link"],
             "ratings": "Good",  # Provide a valid rating value
             "updated_at": datetime.utcnow(),  # Provide the current timestamp
         }
