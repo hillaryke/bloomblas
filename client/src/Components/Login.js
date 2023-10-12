@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
+import axios from '../utils/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [loginResponse, setLoginResponse] = useState({});
+
+  const loginRequest = async ({ email, password }) => {
+    await axios.post('/users/login', { email, password })
+    .then((response) => {
+        if (response.status === 200) {
+            setLoginResponse(response.data);
+            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+    }).catch((error) => {
+        // Handle error.
+        console.log(error);
+    });
+}
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission for user login
-    // Implement your actual authentication logic
+    const response = await loginRequest({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    console.log("response", response);
+
+
   };
 
   return (
@@ -43,7 +65,7 @@ const Login = () => {
             onChange={handleInputChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" onClick={handleSubmit} className="btn btn-primary">Login</button>
       </form>
     </div>
   );

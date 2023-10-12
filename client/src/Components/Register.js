@@ -5,6 +5,7 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
+    confirm_password: ''
   });
 
   const handleInputChange = (e) => {
@@ -52,6 +53,17 @@ const Register = () => {
             id="password"
             name="password"
             value={formData.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="confirm_password"
+            name="confirm_password"
+            value={formData.confirm_password}
             onChange={handleInputChange}
           />
         </div>
