@@ -3,21 +3,12 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 import axios from "../utils/api";
 
-const Register = () => {
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            if (localStorage.getItem('user')) {
-                const user = JSON.parse(localStorage.getItem('user'));
-                setLoggedInUser(user);
-            }
-
-            navigate('/');
-        }
-    }, []);
-
+const Register = ({ loggedInUser, setLoggedInUser }) => {
     const navigate = useNavigate();
+    if (loggedInUser) {
+        navigate('/');
+    }
 
-    const [registeredUser, setRegisteredUser] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         username: '',
@@ -38,7 +29,7 @@ const Register = () => {
                 // console.log(response)
 
                 if (response.status === 201) {
-                    setRegisteredUser(response.data);
+                    setLoggedInUser(response.data);
                     localStorage.setItem('token', response.data.access_token);
                     localStorage.setItem('user', JSON.stringify(response.data));
 
