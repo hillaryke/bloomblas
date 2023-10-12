@@ -1,8 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from '../utils/api';
 import {useNavigate} from "react-router-dom";
 
 const Login = () => {
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            if (localStorage.getItem('user')) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                setLoggedInUser(user);
+            }
+
+            navigate('/');
+        }
+    }, []);
 
     const navigate = useNavigate();
 
