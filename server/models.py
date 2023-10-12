@@ -13,6 +13,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120))
+    password = db.Column(db.String(200))
     email = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -20,7 +21,7 @@ class User(db.Model):
     blogposts = db.relationship('User_blogposts', backref='user')
 
     def __repr__(self):
-        return f'(id={self.id}, username={self.username}, email={self.email})'
+        return f'(id={self.id}, username={self.username}, email={self.email}, password={self.password})'
 
 class Blogpost(db.Model):
     __tablename__ = 'blogposts'
