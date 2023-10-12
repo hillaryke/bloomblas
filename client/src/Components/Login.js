@@ -1,24 +1,34 @@
 import React, {useState} from 'react';
 import axios from '../utils/api';
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
+
+    const navigate = useNavigate();
+
+    const [loggedInUser, setLoggedInUser] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
-    const [loginResponse, setLoginResponse] = useState({});
 
     const loginRequest = async ({email, password}) => {
         await axios.post('/users/login', {email, password})
             .then((response) => {
                 if (response.status === 200) {
-                    setLoginResponse(response.data);
+                    setLoggedInUser(response.data);
                     localStorage.setItem('token', response.data.access_token);
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
             }).catch((error) => {
                 // Handle error.
                 console.log(error);
+
+                if (error.response.status === 400) {
+                    setErrorMessage(error.response.data.message);
+                }
             });
     }
 
@@ -29,14 +39,11 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const response = await loginRequest({
             email: formData.email,
             password: formData.password,
         });
-
-        console.log("response", response);
-
-
     };
 
     return (
@@ -44,6 +51,7 @@ const Login = () => {
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
+                    <h3>{errorMessage}</h3>
                     <label htmlFor="email" className="form-label">Email</label>
                     <input
                         type="email"
